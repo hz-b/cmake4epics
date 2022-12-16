@@ -140,6 +140,21 @@ elseif(CMAKE_HOST_UNIX)
       message(SEND_ERROR "Unknown SunOS Variant: ${CMAKE_HOST_SYSTEM_PROCESSOR}")
     endif()
 
+  elseif(CMAKE_HOST_SYSTEM_NAME MATCHES Darwin)
+    # find out if that is correct one 
+    set(EPICS_HOST_CLASS darwin)
+    set(EPICS_HOST_CLASSES darwin posix default)
+    set(EPICS_HOST_COMPILER clang)
+
+    # currently only access to this architecture thus only doing it for this
+    # work in progress
+    if(CMAKE_HOST_SYSTEM_PROCESSOR MATCHES "^x86_64$")
+      set(EPICS_HOST_ARCHS "darwin-x86_64" "darwin-x86_64-gnu")
+
+    else()
+      message(SEND_ERROR "Unknown darwin Variant: ${CMAKE_HOST_SYSTEM_PROCESSOR}")
+    endif()
+
   else()
     message(SEND_ERROR "Unknown *nix Variant: ${CMAKE_HOST_SYSTEM_NAME}")
 
